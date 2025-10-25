@@ -1,0 +1,54 @@
+/* CUBE CSS - Composition layer */
+/* Handles the overall layout composition */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+@media (min-width: 768px) {
+  .app {
+    padding: 0 var(--space-xl);
+  }
+}
+
+.site-main {
+  flex-grow: 1;
+  padding: var(--space-md) 0;
+}
+
+.content-section {
+  margin-bottom: var(--space-xl);
+}
+
+/* Button compositions */
+.button-group {
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+  margin-bottom: var(--space-md);
+}
+
+.button-group--tight {
+  gap: var(--space-sm);
+}
+
+.button-group--wide {
+  gap: var(--space-lg);
+}
+
+.button-group--end {
+  justify-content: flex-end;
+}
+
+.button-group--center {
+  justify-content: center;
+}
+
+.button-group--stretch > * {
+  flex: 1;
+}

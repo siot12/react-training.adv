@@ -1,0 +1,52 @@
+/* CUBE CSS - Block layer */
+/* Styling for the navigation component */
+
+.site-navigation {
+  margin-bottom: var(--space-xl);
+}
+
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  border-radius: 4px;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.nav-item {
+  margin: 0;
+}
+
+.nav-link {
+  display: inline-block;
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 2px solid transparent;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-link:focus,
+.nav-link-active {
+  border-bottom-color: var(--color-primary);
+  text-decoration: none;
+}
+
+.nav-link-active {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--color-primary-dark);
+}
+
+@media (min-width: 768px) {
+  .nav-list {
+    gap: var(--space-md);
+  }
+
+  .nav-link {
+    padding: var(--space-md) var(--space-lg);
+  }
+}

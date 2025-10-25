@@ -1,0 +1,72 @@
+/* CUBE CSS - Block layer */
+/* Styling for the main content area */
+
+.section-title {
+  font-size: 1.5rem;
+  margin-bottom: var(--space-md);
+  color: var(--color-primary);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--space-sm);
+}
+
+.section-text {
+  color: var(--color-text-light);
+  max-width: 70ch;
+  margin-bottom: var(--space-lg);
+}
+
+/* Photo grid styles for Concurrent component */
+.photo-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.photo-item {
+  background-color: white;
+  border-radius: 4px;
+  padding: var(--space-md);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.photo-item img {
+  width: auto;
+  height: auto;
+  border-radius: 2px;
+  display: block;
+}
+
+/* Dashboard specific styles */
+.dashboard-placeholder {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+
+@media (min-width: 768px) {
+  .section-title {
+    font-size: 1.75rem;
+  }
+
+  .dashboard-placeholder {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .photo-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 992px) {
+  .dashboard-placeholder {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .photo-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
