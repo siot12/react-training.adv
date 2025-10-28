@@ -9,7 +9,7 @@ import Layout from './components/Layout';
 // Pages
 import Home from './pages/Home';
 import Concurrent from './pages/Concurrent';
-import Reports from './pages/Reports';
+import State from './pages/State';
 
 const root = createRoot(document.getElementById('root'));
 root.render(
@@ -19,7 +19,7 @@ root.render(
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="concurrent" element={<Concurrent />} />
-          <Route path="reports" element={<Reports />} />
+          <Route path="state" element={<State />} />
           {/* Catch all - replace with a NotFound component if desired */}
           <Route path="*" element={<Home />} />
         </Route>

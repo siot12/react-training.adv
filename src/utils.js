@@ -31,7 +31,7 @@ export const fetchPhotos = async (callback) => {
     if (!response.ok) throw new Error(`HTTP error! ${response.status}`);
 
     const data = await response.json();
-    callback(inflateData(data, 1));
+    callback(inflateData(data, 10));
   } catch (e) {
     console.error(e);
   }

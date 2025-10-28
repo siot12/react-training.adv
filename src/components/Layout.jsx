@@ -3,7 +3,7 @@ import { Outlet, NavLink } from 'react-router';
 const Layout = () => {
   const navigationLinks = [
     { id: 2, title: 'Concurrent Features', path: '/concurrent' },
-    { id: 3, title: 'Reports', path: '/reports' },
+    { id: 3, title: 'State', path: '/state' },
   ];
 
   return (

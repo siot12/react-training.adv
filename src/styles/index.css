@@ -1,11 +1,13 @@
 /* Main CSS file that imports all other CSS components */
 @import './normalise.css';
+@import './global.css';
 @import './composition.css';
 @import './utilities.css';
 @import './blocks/header.css';
 @import './blocks/navigation.css';
 @import './blocks/content.css';
 @import './blocks/button.css';
+@import './blocks/prop-drilling.css';
 
 /* Base styles */
 :root {
@@ -16,6 +18,7 @@
   --color-text: #263238;
   --color-text-light: #455a64;
   --color-background: #f5f7f9;
+  --color-background-dark: #f0f1f2;
   --color-border: #cfd8dc;
   --color-link: #37474f;
   --color-link-hover: #546e7a;

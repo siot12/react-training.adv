@@ -18,3 +18,22 @@ export const Concurrent = () => (
     </ul>
   </div>
 );
+
+export const PropDrilling = () => (
+  <div className="flow">
+    <h2>The problem with local React state:</h2>
+    <ul>
+      <li>
+        The <code>user</code> state lives in <code>AccountDashboard</code>
+      </li>
+      <li>
+        Only <code>EmailToggle</code> actually needs it
+      </li>
+      <li>
+        But we have to pass it through <em>4 components</em> that don't use it
+      </li>
+      <li>Each component becomes a "prop relay station"</li>
+      <li>Hard to maintain, error-prone, and annoying to write</li>
+    </ul>
+  </div>
+);
