@@ -1,13 +1,12 @@
 // Finally a component that actually uses the props
-const EmailToggle = ({ user, setUser }) => {
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleEmailNotifications } from '../user/userSlice.js';
+
+const EmailToggle = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   const handleToggle = () => {
-    setUser({
-      ...user,
-      notifications: {
-        ...user.notifications,
-        email: !user.notifications.email,
-      },
-    });
+    dispatch(toggleEmailNotifications());
   };
 
   return (
