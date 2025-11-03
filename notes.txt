@@ -1,0 +1,71 @@
+React Advanced Training
+/
+1. State management
+ 	1.1 Prop Drilling - pass down props in a one direction and change the data in the most lower component for the most higher parent
+ 					  => Context API => Good for solo missions, small applications who don't need to handle state much
+ 						Caveats => Re-renders - when any part of state updates, everything down the line re-renders
+ 							   Selectors - we can't subscribe to just a small part of state
+ 							   Undo/Redo Actions or debug - context state can not easily be played back or debugged using browser tooling
+ 							   Maintenance - it's inevitable to get into a 'provider hell'.
+
+1.2 State management with Redux -> What is Redux? - the view(component) asks for changes (for an action -{ type: "withdraw_money", payload, meta}-)
+ 					   		  - view -> action -> state -> view
+ 							  - subscribe to state via selectors (useDispatch , useSelector)
+ 							  -> Single Source of Truth (the store holds all state, data flows in only one direction)
+ 							  -> State is Immutable (state changes only happens one way - through actions. No direct changes (mutations) to state.
+ 						          -> Changes by Pure Function (all changes to state happens using pure functions(reducers) - no side effects.)
+ 									-> Thunk(a piece pf code that does delayed work) , RTKQuery(opionated 'standard' way to write Redux Logic), Redux-SAGA (Efficient side-effect manager for redux)
+
+1.2.1 Redux Saga -> When is it worth it?
+ 				Multistep async workflow ( multiple branches of logic)
+ 				Throttling effects ( animations, update cursor movement -> certain amount of effects per second/minute)
+ 				Background polling ( pause certain stuff/ cancel effects until user comes back)
+ 				Cancellation of effects ( only first click matters or smthing similar and cancel other effects)
+
+JS Generator function -> a function that can pause.
+ 	A JavaScript generator function is a special type of function that can be paused and resumed on demand.
+ 	It's defined using the function* syntax (note the asterisk) and uses the yield keyword to pause its execution and return a value.
+ 	This pause-and-resume capability makes them incredibly powerful for creating custom iterators, handling asynchronous operations, and generating infinite data streams 	without blocking your program.
+
+We have a watcher, a worker.
+
+2. Concurrency features
+ 
+ 		Basically this happens when a component takes a long time to render and we need to prioritize other components first in order to not block the app.
+ 
+ 		2.1 useTransition = state updates that are marked as a Transition are not just de-prioritized. They can be interrupted.
+
+This is a great question, but the comparison isn't a direct one-to-one. The key difference is that React has an explicit set of "Concurrent Features" built 		into its renderer, while Angular addresses the same problem (UI responsiveness) through a different architectural approach.
+
+In short: React's concurrency is about interrupting and prioritizing rendering work, while Angular's modern approach (with Signals) is about avoiding 			unnecessary rendering work in the first place.
+
+1. ⚛️ React Concurrent Features
+ 		React's concurrent features, introduced in React 18, allow React to work on multiple rendering tasks at once without blocking the main thread. This makes the 		UI feel much more responsive.
+
+The core concept is interruptible rendering. Before concurrency, if React started a large render, it had to finish it, even if the user clicked a button or 		typed in an input. This could make the app feel frozen.
+
+
+With concurrent features, React can:
+
+Pause a low-priority render (like updating a large list of search results).
+
+Handle a high-priority update immediately (like the user typing another letter in the search box).
+
+Resume the low-priority render in the background.
+
+Key features that enable this include:
+
+startTransition / useTransition: These functions let you mark certain state updates as "transitions" or low-priority. React will not let these updates block 		higher-priority tasks like user input.
+
+
+Suspense: A declarative way to handle loading states. It tells React to "wait" for data to be fetched or code to be loaded before rendering a component, and 		to show a fallback (like a spinner) in the meantime, all without blocking the rest of the UI.
+
+YOu must feel the UI.
+
+memo - re-renders a component when the dependencies changes.
+
+3. Custom hooks
+    - When to write custom hooks? -> Reusing Logic, Simplifying Complex Components, Abstracting Complex or Browser-Specific APIs\\
+    - What not to put in a hook -> component specific code - hooks are supposed to be re-usable.
+                                -> direct DOM manipulation - better to let React handle the DOM declaratively.
+                                -> JSX rendering - hooks are for state and logic, not rendering.

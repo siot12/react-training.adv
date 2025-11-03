@@ -10,20 +10,26 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import Concurrent from './pages/Concurrent';
 import State from './pages/State';
+import Hooks from './pages/Hooks.jsx';
+import { Provider } from 'react-redux';
+import { store} from './store.js';
 
 const root = createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="concurrent" element={<Concurrent />} />
-          <Route path="state" element={<State />} />
-          {/* Catch all - replace with a NotFound component if desired */}
-          <Route path="*" element={<Home />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="concurrent" element={<Concurrent />} />
+            <Route path="state" element={<State />} />
+            <Route path="hooks" element={<Hooks />} />
+            {/* Catch all - replace with a NotFound component if desired */}
+            <Route path="*" element={<Home />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
 );
