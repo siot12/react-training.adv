@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import { fetchPhotos } from '../utils';
-import { svg_grid, svg_gradient } from '../constants';
+import { svg_grid } from '../constants';
 import { Concurrent as ProblemStatement } from '../components/Problems';
 import EmptyList from '../components/EmptyList';
 
@@ -9,30 +9,57 @@ const PhotoItem = ({ id, title, url, thumbnailUrl }) => {
   return (
     <li className="photo-item flow" title={title}>
       <h4 className="text-capitalize text-ellipsis">{`(${id}) ${title}`}</h4>
-      <img alt={title} src={src} onError={() => setSrc(svg_grid)} />
+      <img alt={title} src={src} onError={() => setSrc(svg_grid)}  loading="lazy" />
     </li>
   );
 };
+
+const CHUNK_SIZE = 100;
 
 const Concurrent = () => {
   const [allPhotos, setAllPhotos] = useState([]);
   const [filteredPhotos, setFilteredPhotos] = useState([]);
   const [filterText, setFilterText] = useState('');
 
+  const [isPending, startTransition] = useTransition();
+  const [filterInput, setFilterInput] = useState('');
+
+  const [visibleCount, setVisibleCount] = useState(CHUNK_SIZE);
+
+
   useEffect(() => {
     if (!allPhotos.length) return;
-    if (!filterText) return setFilteredPhotos(allPhotos);
+    if (!filterText) {
+      setFilteredPhotos(allPhotos);
+      setVisibleCount(CHUNK_SIZE); // Reset visible count
+      return;
+    }
 
     const result = allPhotos.filter((photo) => {
-      const textMatch =
+      return (
         !filterText ||
-        photo.title.toLowerCase().includes(filterText.toLowerCase());
-
-      return textMatch;
+        photo.title.toLowerCase().includes(filterText.toLowerCase())
+      );
     });
 
     setFilteredPhotos(result);
+    setVisibleCount(CHUNK_SIZE);
   }, [filterText, allPhotos]);
+
+  const handleFilterChange = (e) => {
+    const newText = e.target.value || '';
+
+    setFilterInput(newText);
+    startTransition(() => {
+      setFilterText(newText);
+    });
+  };
+
+  const loadMorePhotos = () => {
+    setVisibleCount(prevCount => prevCount + CHUNK_SIZE);
+  };
+
+  const visiblePhotos = filteredPhotos.slice(0, visibleCount);
 
   return (
     <section className="content-section">
@@ -54,8 +81,8 @@ const Concurrent = () => {
             id="filter-text"
             type="text"
             placeholder="Filter..."
-            value={filterText}
-            onChange={(e) => setFilterText(e.target.value || '')}
+            value={filterInput}
+            onChange={handleFilterChange}
             className="filter-input"
           />
         </div>
@@ -63,17 +90,27 @@ const Concurrent = () => {
 
       {allPhotos.length < 1 && <EmptyList />}
 
-      {filteredPhotos.length > 0 && (
+      {visiblePhotos.length > 0 && (
         <div>
           <div className="filter-summary">
-            Showing {filteredPhotos.length} / {allPhotos.length}
+            Showing {visiblePhotos.length} / {filteredPhotos.length} / {allPhotos.length}
           </div>
 
           <ul className="photo-grid">
-            {filteredPhotos.map((photo) => (
+            {visiblePhotos.map((photo) => (
               <PhotoItem key={photo.id} {...photo} />
             ))}
           </ul>
+          {visibleCount < filteredPhotos.length && (
+            <div style={{ textAlign: 'center', margin: '2rem 0' }}>
+              <button
+                className="btn btn--primary"
+                onClick={loadMorePhotos}
+              >
+                Load More
+              </button>
+            </div>
+          )}
         </div>
       )}
     </section>
